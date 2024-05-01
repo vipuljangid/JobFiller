@@ -42,9 +42,10 @@ export default function Index({ navigateToPage }) {
   ];
 
 
-  const handleOption=(id,type)=>{
-    setSelectedOption(id)
-    setType(type)
+  const handleOption=(e)=>{
+    setType(e.target.value)
+    // setType(type)
+    console.log(e.target.value)
   }
 
   function handleOnChange(e, setState) {
@@ -122,28 +123,31 @@ const handleSubmit=async()=>{
         <p className="mt-4 mb-2">
           Chosse below Options for specific task:-
         </p>
-        <div className='grid grid-cols-2 gap-2 mx-4 mt-2 mb-6'>
-          <input className=' rounded-md px-4 py-2 text-black' placeholder='Name' name="name" onChange={(e)=>handleOnChange(e,setName)} />
-          <input className=' rounded-md px-4 py-2 text-black' placeholder='Position' name="position" onChange={(e)=>handleOnChange(e,setPosition)} />
-          <input className=' rounded-md px-4 py-2 text-black' placeholder='Company' name="company`" onChange={(e)=>handleOnChange(e,setCompany)} />
+        <div className="">
+          <input className={styles.input} placeholder='Name' name="name" onChange={(e)=>handleOnChange(e,setName)} />
+          <input className={styles.input} placeholder='Position' name="position" onChange={(e)=>handleOnChange(e,setPosition)} />
+          <input className={styles.input} placeholder='Company' name="company`" onChange={(e)=>handleOnChange(e,setCompany)} />
           {/* <input className=' rounded-md px-4 py-2 text-black' placeholder='Name' name="name" onChange={(e)=>handleOnChange(e,setName)} /> */}
         </div>
-        {console.log(company,position,name)}
 
-        <div>
+        <select className={styles.select} onChange={handleOption}>
           {options?.map((ele, index) => (
-            <div key={index} className={`bg-[#fafafa] text-[grey] my-2 py-3 px-2 rounded focus:bg-[green] cursor-pointer ${selectedOption===index?'bg-[green] text-white transition-all ':""}`} onClick={()=>handleOption(index,ele?.type)}>{ele?.title}</div>
+            <option key={index} value={ele?.type} 
+            className={styles.options}
+            // className={`bg-[#fafafa] text-[grey] my-2 py-3 px-2 rounded focus:bg-[green] cursor-pointer ${selectedOption===index?'bg-[green] text-white transition-all ':""}`} 
+            >{ele?.title}</option>
+            
           ))}
-        </div>
-       
-       <div className='bg-[darkGreen] px-4 py-2 rounded-lg font-semibold cursor-pointer' onClick={handleSubmit}>Submit</div>
+        </select>
+       {console.log(type)}
+       <div className={styles.submitBtn} onClick={handleSubmit}>Submit</div>
 
         {/* {console.log(name)} */}
         {/* <h1 className={styles.code}>Index Page ./components/Index/index.js</h1> */}
         {/* <p onClick={() => navigateToPage('new')}>{"Go to New Page >"}</p> */}
       </main>
-       <div className='text-left'>Output:     <CopyToClipboardButton text={data} /></div>
-       <textarea className='w-full text-black rounded-md focus:border-0' rows={7} value={data}/>
+       <div className='text-left'>    <CopyToClipboardButton text={data} /></div>
+       <textarea className={styles.output} rows={8} value={data}/>
    
     </div>
   );
